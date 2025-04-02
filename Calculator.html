@@ -1,0 +1,113 @@
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Vue.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .calculator {
+            width: 300px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            font-size: 2em;
+            text-align: right;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+        button {
+            padding: 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+            border: none;
+            background: #ddd;
+            border-radius: 5px;
+        }
+        button.operator {
+            background: #ff9500;
+            color: white;
+        }
+        button.equal {
+            background: #28a745;
+            color: white;
+        }
+        button.clear {
+            background: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="calculator">
+        <input type="text" v-model="display" disabled>
+        <div class="buttons">
+            <button class="clear" @click="press('C')">C</button>
+            <button class="operator" @click="press('/')">/</button>
+            <button class="operator" @click="press('*')">*</button>
+            <button class="operator" @click="press('-')">-</button>
+
+            <button @click="press('7')">7</button>
+            <button @click="press('8')">8</button>
+            <button @click="press('9')">9</button>
+            <button class="operator" @click="press('+')">+</button>
+
+            <button @click="press('4')">4</button>
+            <button @click="press('5')">5</button>
+            <button @click="press('6')">6</button>
+            <button @click="press('.')">.</button>
+
+            <button @click="press('1')">1</button>
+            <button @click="press('2')">2</button>
+            <button @click="press('3')">3</button>
+            <button class="equal" @click="press('=')">=</button>
+
+            <button @click="press('0')">0</button>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    display: ''
+                };
+            },
+            methods: {
+                press(value) {
+                    if (value === 'C') {
+                        this.display = '';
+                    } else if (value === '=') {
+                        try {
+                            this.display = eval(this.display).toString();
+                        } catch {
+                            this.display = 'Erro';
+                        }
+                    } else {
+                        this.display += value;
+                    }
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
